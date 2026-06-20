@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{A313B1E8-6EA9-4F13-B27C-54B5CBA4C8D0}</ProjectGuid>
+    <TargetFrameworks>net472;netstandard2.1;</TargetFrameworks>
+    <AssemblyTitle>Grammophone.DataAccess.EntityFramework.Plus</AssemblyTitle>
+    <Product>Grammophone.DataAccess.EntityFramework.Plus</Product>
+    <Copyright>Copyright ©  2016</Copyright>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Grammophone.DataAccess.EntityFramework.Plus.XML</DocumentationFile>
+    <LangVersion>8.0</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Z.EntityFramework.Plus.EF6" Version="8.103.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Grammophone.DataAccess\Grammophone.DataAccess.csproj" />
+    <ProjectReference Include="..\Grammophone.DataAccess.EntityFramework\Grammophone.DataAccess.EntityFramework.csproj" />
+  </ItemGroup>
+</Project>
