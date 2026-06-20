@@ -41,23 +41,23 @@ namespace Grammophone.DataAccess.EntityFramework.Plus
 				throw new NotSupportedException("ExecuteUpdate expressions must contain a chain of SetProperty calls.");
 			}
 
-			if (methodCall.Arguments[0] is MethodCallExpression previousCall)
+			if (methodCall.Object is MethodCallExpression previousCall)
 			{
 				CollectBindings(previousCall, targetParameter, bindings);
 			}
 
-			var propertyLambda = (LambdaExpression)methodCall.Arguments[1];
+			var propertyLambda = (LambdaExpression)methodCall.Arguments[0];
 			var memberExpression = GetMemberExpression(propertyLambda.Body);
 
 			Expression valueExpression;
 
-			if (methodCall.Arguments[2] is LambdaExpression valueLambda)
+			if (methodCall.Arguments[1] is LambdaExpression valueLambda)
 			{
 				valueExpression = new ParameterReplacingVisitor(valueLambda.Parameters[0], targetParameter).Visit(valueLambda.Body);
 			}
 			else
 			{
-				valueExpression = methodCall.Arguments[2];
+				valueExpression = methodCall.Arguments[1];
 			}
 
 			bindings.Add(Expression.Bind(memberExpression.Member, valueExpression));
