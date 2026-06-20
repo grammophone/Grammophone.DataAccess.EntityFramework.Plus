@@ -1,7 +1,9 @@
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Grammophone.DataAccess.QueryExtensions;
 using Z.EntityFramework.Plus;
 
 namespace Grammophone.DataAccess.EntityFramework.Plus
@@ -37,6 +39,29 @@ namespace Grammophone.DataAccess.EntityFramework.Plus
 			if (nativeQuery == null) throw new ArgumentNullException(nameof(nativeQuery));
 
 			return nativeQuery.DeleteFromQueryAsync(cancellationToken);
+		}
+
+		/// <inheritdoc/>
+		public override int ExecuteUpdate<T>(
+			IQueryable<T> nativeQuery,
+			Expression<Func<SetPropertyCalls<T>, SetPropertyCalls<T>>> setPropertyCalls)
+		{
+			if (nativeQuery == null) throw new ArgumentNullException(nameof(nativeQuery));
+			if (setPropertyCalls == null) throw new ArgumentNullException(nameof(setPropertyCalls));
+
+			return nativeQuery.UpdateFromQuery(EFPlusUpdateExpressionTranslator.Translate(setPropertyCalls));
+		}
+
+		/// <inheritdoc/>
+		public override Task<int> ExecuteUpdateAsync<T>(
+			IQueryable<T> nativeQuery,
+			Expression<Func<SetPropertyCalls<T>, SetPropertyCalls<T>>> setPropertyCalls,
+			CancellationToken cancellationToken = default(CancellationToken))
+		{
+			if (nativeQuery == null) throw new ArgumentNullException(nameof(nativeQuery));
+			if (setPropertyCalls == null) throw new ArgumentNullException(nameof(setPropertyCalls));
+
+			return nativeQuery.UpdateFromQueryAsync(EFPlusUpdateExpressionTranslator.Translate(setPropertyCalls), cancellationToken);
 		}
 
 		#endregion
