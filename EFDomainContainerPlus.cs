@@ -1,4 +1,5 @@
 using Grammophone.DataAccess.EntityFramework;
+using System.Data.Common;
 
 namespace Grammophone.DataAccess.EntityFramework.Plus
 {
@@ -41,6 +42,17 @@ namespace Grammophone.DataAccess.EntityFramework.Plus
 		/// <param name="transactionMode">The transaction behavior.</param>
 		protected EFDomainContainerPlus(string nameOrConnectionString, TransactionMode transactionMode)
 			: base(nameOrConnectionString, transactionMode)
+		{
+		}
+
+		/// <summary>
+		/// Create.
+		/// </summary>
+		/// <param name="connection">The connection to use.</param>
+		/// <param name="ownTheConnection">If true, hand over connection ownership to the container.</param>
+		/// <param name="transactionMode">The transaction behavior.</param>
+		protected EFDomainContainerPlus(DbConnection connection, bool ownTheConnection, TransactionMode transactionMode)
+			: base(connection, ownTheConnection, transactionMode)
 		{
 		}
 
